@@ -9,9 +9,12 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@queryflow-402/sdk": "^0.1.2",
+    "dotenv": "^17.2.3",
     "next": "16.0.8",
     "react": "19.2.1",
-    "react-dom": "19.2.1"
+    "react-dom": "19.2.1",
+    "viem": "^2.41.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
