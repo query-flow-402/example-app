@@ -42,3 +42,38 @@ export async function getMarketInsight(assets: string[] = ["BTC", "ETH"]) {
     };
   }
 }
+
+export async function getPricePrediction(asset: string = "BTC") {
+  const privateKey = process.env.PRIVATE_KEY;
+
+  if (!privateKey) {
+    return {
+      success: false,
+      error: "Server Error: Missing PRIVATE_KEY in .env.local",
+    };
+  }
+
+  try {
+    const client = new QueryFlowClient(privateKey, { mode: "tx" });
+    console.log("🤖 Querying Price Prediction...");
+
+    const result = await client.price({
+      asset,
+      timeframe: "7d",
+    });
+
+    console.log("✅ Query Success:", result.prediction.targetPrice);
+
+    return {
+      success: true,
+      data: result,
+      txHash: client.lastTxHash,
+    };
+  } catch (error) {
+    console.error("SDK Error:", error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown error occurred",
+    };
+  }
+}
